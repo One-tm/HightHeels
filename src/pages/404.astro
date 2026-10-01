@@ -1,0 +1,17 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+---
+
+<BaseLayout title="Страница не найдена — Heels Please" description="Запрошенная страница не найдена." canonicalPath="/404.html">
+  <Header compact />
+  <main id="content" class="not-found">
+    <p class="not-found__code">404</p>
+    <div>
+      <p class="eyebrow">Такой пары здесь нет</p>
+      <h1>Страница<br /><em>не найдена</em></h1>
+      <p>Вернитесь на главную — там бренды, инструкция по выбору и связь с менеджером.</p>
+      <a class="button button--light" href="/"><span>На главную</span></a>
+    </div>
+  </main>
+</BaseLayout>

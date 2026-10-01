@@ -1,0 +1,20 @@
+---
+const { compact = false } = Astro.props;
+---
+
+<header class:list={["site-header", { "site-header--compact": compact }]}>
+  <a class="wordmark" href="/" aria-label="Heels Please — на главную">
+    <span>HEELS</span><span>PLEASE</span>
+  </a>
+  {!compact && (
+    <nav aria-label="Основная навигация">
+      <a href="#brands">Бренды</a>
+      <a href="#guide">Как выбрать</a>
+      <a href="#order">Как заказать</a>
+    </nav>
+  )}
+  <a class="header-cta" href="https://t.me/pleaserrussia" target="_blank" rel="noreferrer">
+    Telegram
+    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m21.2 3.1-3 17c-.2 1.2-1 1.5-2 1l-4.5-3.4-2.2 2.1c-.2.3-.4.5-.9.5l.3-4.6 8.4-7.6c.4-.3-.1-.5-.5-.2L6.5 14.4 2 13c-1-.3-1-1 .2-1.5L19.7 2.8c.8-.3 1.6.2 1.5.3Z"/></svg>
+  </a>
+</header>

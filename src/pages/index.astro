@@ -1,0 +1,161 @@
+---
+import { Image } from "astro:assets";
+import heroImage from "../assets/pleaser.jpg";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import BrandCard from "../components/BrandCard.astro";
+import TelegramCta from "../components/TelegramCta.astro";
+import { brands } from "../data/brands";
+
+const description = "Помощь с выбором и заказом обуви Pleaser, Hella Heels и Demonia через менеджера Telegram.";
+
+const orderChecklist = `Здравствуйте! Хочу подобрать обувь:\n• Бренд:\n• Модель или ссылка:\n• Цвет:\n• Размер:\n• Длина стопы в сантиметрах:\n• Город:`;
+---
+
+<BaseLayout title="Heels Please — Pleaser, Hella Heels и Demonia под заказ" description={description}>
+  <Header />
+  <main id="content">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__copy">
+        <p class="eyebrow hero__eyebrow">Обувь, которая продолжает движение</p>
+        <h1 id="hero-title">Найди свою<br /><em>идеальную</em><br />пару.</h1>
+        <p class="hero__intro">Pleaser, Hella Heels и Demonia — помогаем разобраться в моделях, размере и оформить заказ через менеджера.</p>
+        <TelegramCta />
+        <p class="hero__note">Консультация и оформление — в Telegram</p>
+      </div>
+      <div class="hero__visual">
+        <div class="hero__frame">
+          <Image
+            src={heroImage}
+            alt="Чёрные ботильоны Pleaser Adore-1016 на платформе и высоком каблуке"
+            widths={[560, 840, 1120]}
+            sizes="(max-width: 760px) 100vw, 48vw"
+            format="webp"
+            loading="eager"
+            fetchpriority="high"
+          />
+        </div>
+        <span class="hero__vertical">POLE · STAGE · SELF EXPRESSION</span>
+        <span class="hero__edition">Selected<br />with care</span>
+      </div>
+      <a class="scroll-cue" href="#brands" aria-label="Перейти к брендам"><span></span>Смотреть</a>
+    </section>
+
+    <section class="marquee" aria-label="Представленные бренды">
+      <div>Pleaser <span>✦</span> Hella Heels <span>✦</span> Demonia <span>✦</span> Pleaser <span>✦</span> Hella Heels <span>✦</span> Demonia</div>
+    </section>
+
+    <section class="brands section" id="brands" aria-labelledby="brands-title">
+      <div class="section-heading">
+        <p class="eyebrow">Три характера</p>
+        <h2 id="brands-title">Выбери<br /><em>свой бренд</em></h2>
+        <p>У каждого бренда — своя посадка, настроение и линейка моделей. Начни с образа, а с размером поможет менеджер.</p>
+      </div>
+      <div class="brands__grid">
+        {brands.map((brand) => <BrandCard brand={brand} />)}
+      </div>
+    </section>
+
+    <section class="guide section" id="guide" aria-labelledby="guide-title">
+      <div class="guide__intro">
+        <p class="eyebrow">Перед заказом</p>
+        <h2 id="guide-title">Как выбрать пару,<br /><em>которая подойдёт</em></h2>
+        <p>Не ориентируйся только на привычный российский размер. У разных брендов и линеек посадка отличается.</p>
+      </div>
+      <ol class="guide__steps">
+        <li>
+          <span>01</span>
+          <div><h3>Определи формат</h3><p>Босоножки, ботильоны, сапоги или массивная lifestyle-платформа — под задачу и образ.</p></div>
+        </li>
+        <li>
+          <span>02</span>
+          <div><h3>Измерь стопу</h3><p>Встань на лист бумаги, отметь крайние точки и измерь расстояние по самой длинной части в сантиметрах.</p></div>
+        </li>
+        <li>
+          <span>03</span>
+          <div><h3>Проверь модель</h3><p>Пришли менеджеру ссылку или артикул. Он поможет сверить таблицу бренда и особенности конкретной пары.</p></div>
+        </li>
+      </ol>
+      <aside class="guide__note">
+        <strong>Важно</strong>
+        <p>Таблицы размеров — ориентир, а не гарантия посадки. Финальный выбор лучше подтвердить с менеджером до заказа.</p>
+      </aside>
+    </section>
+
+    <section class="brief section" aria-labelledby="brief-title">
+      <div class="brief__copy">
+        <p class="eyebrow">Готова к выбору?</p>
+        <h2 id="brief-title">Скопируй короткий<br /><em>чек-лист</em></h2>
+        <p>Заполни его и отправь в группу — так менеджер быстрее поймёт, какую пару ты ищешь.</p>
+      </div>
+      <div class="brief__card">
+        <div class="brief__card-top"><span>Сообщение менеджеру</span><span>6 пунктов</span></div>
+        <pre id="order-checklist">{orderChecklist}</pre>
+        <button class="copy-button" type="button" data-copy-target="order-checklist">
+          <span>Скопировать чек-лист</span>
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 7V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2M5 8h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2Z"/></svg>
+        </button>
+        <p class="copy-status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="order section" id="order" aria-labelledby="order-title">
+      <div class="order__heading">
+        <p class="eyebrow">Без сложных форм</p>
+        <h2 id="order-title">Как всё<br /><em>происходит</em></h2>
+      </div>
+      <ol class="order__steps">
+        <li><span>1</span><h3>Выбираешь</h3><p>Находишь модель на сайте бренда или описываешь менеджеру, что хочется.</p></li>
+        <li><span>2</span><h3>Уточняешь</h3><p>Отправляешь ссылку, размер стопы и город. Менеджер проверяет детали.</p></li>
+        <li><span>3</span><h3>Подтверждаешь</h3><p>Получаешь актуальные условия, итоговую стоимость и согласовываешь заказ.</p></li>
+        <li><span>4</span><h3>Остаёшься на связи</h3><p>Информация по заказу и дальнейшие вопросы остаются в Telegram.</p></li>
+      </ol>
+    </section>
+
+    <section class="faq section" aria-labelledby="faq-title">
+      <div class="faq__heading">
+        <p class="eyebrow">Коротко о главном</p>
+        <h2 id="faq-title">Вопросы<br /><em>и ответы</em></h2>
+      </div>
+      <div class="faq__list">
+        <details><summary>На сайте можно оформить заказ?<span>+</span></summary><p>Нет. Сайт помогает выбрать направление и подготовить данные. Все заказы оформляются напрямую с менеджером группы в Telegram.</p></details>
+        <details><summary>Где узнать актуальную стоимость?<span>+</span></summary><p>Отправьте менеджеру ссылку или артикул модели. Он рассчитает актуальную стоимость и сообщит условия до подтверждения заказа.</p></details>
+        <details><summary>Как не ошибиться с размером?<span>+</span></summary><p>Измерьте стопу в сантиметрах и приложите результат к запросу. Также используйте официальную таблицу выбранного бренда — ссылки есть в карточках выше.</p></details>
+        <details><summary>Можно попросить помочь с выбором модели?<span>+</span></summary><p>Да. Опишите опыт, желаемую высоту, тип обуви и приложите референс — менеджер поможет сузить выбор.</p></details>
+      </div>
+    </section>
+
+    <section class="final-cta" aria-labelledby="final-title">
+      <p class="eyebrow">Твоя следующая пара начинается здесь</p>
+      <h2 id="final-title">Нашла модель?<br /><em>Напиши нам.</em></h2>
+      <TelegramCta label="Перейти в Telegram" class="button--light" />
+      <p>Ответим на вопросы и поможем подготовить заказ.</p>
+    </section>
+  </main>
+  <Footer />
+  <a class="mobile-cta" href="https://t.me/pleaserrussia" target="_blank" rel="noreferrer">Написать в Telegram</a>
+
+  <script>
+    const copyButton = document.querySelector<HTMLButtonElement>("[data-copy-target]");
+    const copyStatus = document.querySelector<HTMLElement>(".copy-status");
+
+    copyButton?.addEventListener("click", async () => {
+      const targetId = copyButton.dataset.copyTarget;
+      const text = targetId ? document.getElementById(targetId)?.textContent?.trim() : "";
+      if (!text) return;
+
+      try {
+        await navigator.clipboard.writeText(text);
+        copyButton.querySelector("span")!.textContent = "Скопировано";
+        if (copyStatus) copyStatus.textContent = "Чек-лист скопирован в буфер обмена.";
+        window.setTimeout(() => {
+          copyButton.querySelector("span")!.textContent = "Скопировать чек-лист";
+          if (copyStatus) copyStatus.textContent = "";
+        }, 2500);
+      } catch {
+        if (copyStatus) copyStatus.textContent = "Не удалось скопировать. Выделите текст вручную.";
+      }
+    });
+  </script>
+</BaseLayout>

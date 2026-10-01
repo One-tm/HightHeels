@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://heelsplease.ru/sitemap-index.xml

@@ -11,6 +11,8 @@ out/
 
 # Cache
 .cache/
+.astro/
+.npm-cache/
 .parcel-cache/
 .vite/
 .turbo/
