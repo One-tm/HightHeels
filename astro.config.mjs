@@ -9,7 +9,7 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
-      filter: (page) => page === "https://heelsplease.ru/",
+      filter: (page) => ["https://heelsplease.ru/", "https://heelsplease.ru/catalog/"].includes(page),
     }),
   ],
 });
