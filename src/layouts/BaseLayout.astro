@@ -5,9 +5,19 @@ interface Props {
   title: string;
   description: string;
   canonicalPath?: string;
+  structuredData?: Record<string, unknown>;
+  robots?: string;
+  keywords?: string[];
 }
 
-const { title, description, canonicalPath = "/" } = Astro.props;
+const {
+  title,
+  description,
+  canonicalPath = "/",
+  structuredData,
+  robots = "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  keywords = [],
+} = Astro.props;
 const canonical = new URL(canonicalPath, Astro.site);
 ---
 
@@ -15,18 +25,24 @@ const canonical = new URL(canonicalPath, Astro.site);
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0a0a0b" />
     <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
+    {keywords.length > 0 && <meta name="keywords" content={keywords.join(", ")} />}
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ru_RU" />
+    <meta property="og:site_name" content="Heels Please" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
+    {structuredData && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
     <!-- Yandex.Metrika counter -->
     <script is:inline type="text/javascript">
       (function(m,e,t,r,i,k,a){

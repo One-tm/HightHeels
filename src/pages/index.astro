@@ -8,19 +8,109 @@ import BrandCard from "../components/BrandCard.astro";
 import TelegramCta from "../components/TelegramCta.astro";
 import { brands } from "../data/brands";
 
-const description = "Помощь с выбором и заказом обуви Pleaser, Hella Heels и Demonia через менеджера Telegram.";
+const title = "Стрипы Pleaser, Hella Heels и Demonia под заказ | Heels Please";
+const description = "Поможем подобрать и заказать стрипы Pleaser, Hella Heels и Demonia: размер, модель, стоимость и доставка по России и в Беларусь. Консультация в Telegram.";
+const keywords = [
+  "стрипы Pleaser",
+  "обувь для pole dance",
+  "Hella Heels",
+  "Demonia",
+  "заказать стрипы",
+  "подобрать размер стрипов",
+];
 
 const orderChecklist = `Здравствуйте! Хочу подобрать обувь:\n• Бренд:\n• Модель или ссылка:\n• Цвет:\n• Размер:\n• Длина стопы в сантиметрах:\n• Город:`;
+
+const faqItems = [
+  {
+    question: "Сколько стоит обувь Pleaser, Hella Heels или Demonia?",
+    answer: "Цена зависит от бренда, модели, размера, наличия и способа доставки. Пришлите менеджеру ссылку, артикул или фотографию пары — перед оформлением он рассчитает актуальную итоговую стоимость.",
+  },
+  {
+    question: "Какие модели и цвета сейчас можно заказать?",
+    answer: "Доступность меняется. Чтобы быстро получить подходящую подборку, укажите бренд, тип обуви — босоножки, ботильоны или сапоги, — желаемую высоту платформы, цвет и размер.",
+  },
+  {
+    question: "Как подобрать размер стрипов по длине стопы?",
+    answer: "Измерьте обе стопы в сантиметрах и сообщите больший результат, обычный российский размер и размер уже имеющейся обуви Pleaser или Hella Heels, если она есть. Менеджер сверит данные с таблицей и особенностями конкретной колодки.",
+  },
+  {
+    question: "Что выбрать: босоножки, ботильоны или ботфорты?",
+    answer: "Для выбора важны опыт, задача и желаемая фиксация стопы. Босоножки легче и открытее, ботильоны обычно лучше фиксируют голеностоп, а сапоги и ботфорты сильнее поддерживают ногу. Посадка также зависит от колодки и ремешков конкретной модели.",
+  },
+  {
+    question: "Чем отличаются тройки, четвёрки и пятёрки?",
+    answer: "Так в сообществе называют категории моделей по высоте платформы и каблука. Чем выше категория, тем заметнее меняются угол стопы, устойчивость и требования к опыту. Перед заказом лучше обсудить конкретную модель, а не ориентироваться только на высоту.",
+  },
+  {
+    question: "Как понять, хорошо ли модель держит стопу?",
+    answer: "Смотрите на форму колодки, угол скоса, ширину перемычки и конструкцию ремешков. Для активного танца особенно важна фиксация голеностопа. По фотографии это не всегда очевидно, поэтому попросите менеджера сравнить выбранную модель с проверенными аналогами.",
+  },
+  {
+    question: "Можно ли заказать редкий цвет или модель, которой нет в каталоге?",
+    answer: "Иногда доступен индивидуальный или коллективный пошив классических моделей. Возможность зависит от производителя. Индивидуальная пара обычно стоит дороже, а для коллективного заказа может потребоваться минимальное количество участников и полная предоплата.",
+  },
+  {
+    question: "Сколько занимает заказ и доставка?",
+    answer: "Срок зависит от наличия, бренда, страны назначения и того, нужна ли дополнительная пошивка. Менеджер сообщит ориентировочный срок вместе с итоговой стоимостью до подтверждения заказа.",
+  },
+  {
+    question: "Можно ли заказать с доставкой в Беларусь?",
+    answer: "Да, доставка в Беларусь возможна. Её актуальную стоимость и срок менеджер рассчитает по городу, модели и параметрам отправления.",
+  },
+  {
+    question: "Как безопасно оформить заказ?",
+    answer: "Оформляйте заказ только через официальный Telegram группы. Представители Heels Please не пишут покупателям первыми. Не переводите деньги аккаунтам, которые самостоятельно обратились к вам от имени магазина.",
+  },
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://heelsplease.ru/#organization",
+      name: "Heels Please",
+      url: "https://heelsplease.ru/",
+      sameAs: ["https://t.me/pleaserrussia"],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://heelsplease.ru/#website",
+      url: "https://heelsplease.ru/",
+      name: "Heels Please",
+      alternateName: "Хилс Плиз",
+      inLanguage: "ru-RU",
+      publisher: { "@id": "https://heelsplease.ru/#organization" },
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://heelsplease.ru/#faq",
+      url: "https://heelsplease.ru/#faq",
+      name: "Частые вопросы о выборе и заказе стрипов",
+      inLanguage: "ru-RU",
+      isPartOf: { "@id": "https://heelsplease.ru/#website" },
+      mainEntity: faqItems.map(({ question, answer }) => ({
+        "@type": "Question",
+        name: question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: answer,
+        },
+      })),
+    },
+  ],
+};
 ---
 
-<BaseLayout title="Heels Please — Pleaser, Hella Heels и Demonia под заказ" description={description}>
+<BaseLayout title={title} description={description} keywords={keywords} structuredData={structuredData}>
   <Header />
   <main id="content">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero__copy">
         <p class="eyebrow hero__eyebrow">Обувь, которая продолжает движение</p>
-        <h1 id="hero-title">Найди свою<br /><em>идеальную</em><br />пару.</h1>
-        <p class="hero__intro">Pleaser, Hella Heels и Demonia — помогаем разобраться в моделях, размере и оформить заказ через менеджера.</p>
+        <h1 id="hero-title">Стрипы и<br /><em>платформы</em><br />под заказ.</h1>
+        <p class="hero__intro">Pleaser, Hella Heels и Demonia — помогаем подобрать модель и размер, рассчитать стоимость и оформить доставку по России и в Беларусь.</p>
         <TelegramCta />
         <p class="hero__note">Консультация и оформление — в Telegram</p>
       </div>
@@ -113,16 +203,26 @@ const orderChecklist = `Здравствуйте! Хочу подобрать о
       </ol>
     </section>
 
-    <section class="faq section" aria-labelledby="faq-title">
+    <section class="faq section" id="faq" aria-labelledby="faq-title">
       <div class="faq__heading">
-        <p class="eyebrow">Коротко о главном</p>
-        <h2 id="faq-title">Вопросы<br /><em>и ответы</em></h2>
+        <div class="faq__heading-sticky">
+          <p class="eyebrow">Отвечаем по делу</p>
+          <h2 id="faq-title">Частые<br /><em>вопросы</em></h2>
+          <p class="faq__intro">Собрали ответы по темам, которые чаще всего обсуждают перед заказом: цена, размер, посадка, наличие и доставка.</p>
+          <a class="text-link" href="https://t.me/pleaserrussia" target="_blank" rel="noreferrer">Задать свой вопрос в Telegram</a>
+        </div>
       </div>
       <div class="faq__list">
-        <details><summary>На сайте можно оформить заказ?<span>+</span></summary><p>Нет. Сайт помогает выбрать направление и подготовить данные. Все заказы оформляются напрямую с менеджером группы в Telegram.</p></details>
-        <details><summary>Где узнать актуальную стоимость?<span>+</span></summary><p>Отправьте менеджеру ссылку или артикул модели. Он рассчитает актуальную стоимость и сообщит условия до подтверждения заказа.</p></details>
-        <details><summary>Как не ошибиться с размером?<span>+</span></summary><p>Измерьте стопу в сантиметрах и приложите результат к запросу. Также используйте официальную таблицу выбранного бренда — ссылки есть в карточках выше.</p></details>
-        <details><summary>Можно попросить помочь с выбором модели?<span>+</span></summary><p>Да. Опишите опыт, желаемую высоту, тип обуви и приложите референс — менеджер поможет сузить выбор.</p></details>
+        {faqItems.map((item, index) => (
+          <details open={index === 0}>
+            <summary>
+              <span class="faq__number">{String(index + 1).padStart(2, "0")}</span>
+              <span class="faq__question">{item.question}</span>
+              <span class="faq__toggle" aria-hidden="true">+</span>
+            </summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
       </div>
     </section>
 

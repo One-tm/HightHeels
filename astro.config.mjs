@@ -4,5 +4,12 @@ import sitemap from "@astrojs/sitemap";
 export default defineConfig({
   site: "https://heelsplease.ru",
   output: "static",
-  integrations: [sitemap()],
+  build: {
+    inlineStylesheets: "always",
+  },
+  integrations: [
+    sitemap({
+      filter: (page) => page === "https://heelsplease.ru/",
+    }),
+  ],
 });
