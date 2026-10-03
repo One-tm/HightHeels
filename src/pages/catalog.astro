@@ -2,357 +2,119 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-
-const title = "Подбор стрипов по размеру и высоте | Heels Please";
-const description = "Подберите стрипы Pleaser, Hella Heels или Demonia по типу, высоте, размеру, цвету и материалу. Переход в официальный каталог и готовый запрос менеджеру.";
-
-const brands = [
-  {
-    id: "pleaser",
-    name: "Pleaser",
-    eyebrow: "Dance platforms",
-    description: "Босоножки, ботильоны и высокие сапоги с каблуком от 4 до 11 дюймов.",
-    officialUrl: "https://pleasershoes.com/collections/pleaser",
-  },
-  {
-    id: "hella",
-    name: "Hella Heels",
-    eyebrow: "Made for movement",
-    description: "Танцевальные модели 6–9 дюймов, яркие коллекции и варианты Wide Fit.",
-    officialUrl: "https://us.hellaheels.com/collections/all-heels",
-  },
-  {
-    id: "demonia",
-    name: "Demonia",
-    eyebrow: "Alternative platforms",
-    description: "Ботинки, сапоги, сандалии и lifestyle-платформы в альтернативной эстетике.",
-    officialUrl: "https://demoniacult.com/collections/all",
-  },
-];
-
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  name: "Подбор обуви Pleaser, Hella Heels и Demonia",
-  description,
-  url: "https://heelsplease.ru/catalog/",
-  inLanguage: "ru-RU",
-  mainEntity: {
-    "@type": "ItemList",
-    itemListElement: brands.map((brand, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      name: brand.name,
-      url: brand.officialUrl,
-    })),
-  },
-};
+import { catalogBrands, options, fieldTitles, type FilterName } from "../data/catalog";
+const title = "Подбор стрипов: тройки, четвёрки, пятёрки | Heels Please";
+const description = "Выберите бренд, тип и высоту стрипов: тройки, четвёрки или пятёрки. Официальные каталоги и готовый запрос для подбора модели, размера и доставки.";
+const structuredData = { "@context": "https://schema.org", "@type": "CollectionPage", name: title, description, url: "https://heelsplease.ru/catalog/", inLanguage: "ru-RU" };
+const primary: FilterName[] = ["brand", "type", "height", "size"];
+const secondary: FilterName[] = ["color", "material", "fit", "toe"];
 ---
-
 <BaseLayout title={title} description={description} canonicalPath="/catalog/" structuredData={structuredData}>
   <Header compact />
   <main id="content" class="catalog-page">
     <header class="catalog-hero">
-      <div>
-        <p class="eyebrow">Навигатор по оригинальным каталогам</p>
-        <h1>Подбери пару<br /><em>по параметрам</em></h1>
-      </div>
-      <p>Выбери характеристики — мы подготовим переход в подходящий раздел официального каталога и соберём понятный запрос менеджеру.</p>
+      <div><p class="eyebrow">Твоя пара начинается с пожеланий</p><h1>Подбери пару<br /><em>по параметрам</em></h1></div>
+      <p>Тройки, четвёрки или пятёрки? Выбери, что хочется. Получишь ссылки на официальные каталоги и готовое сообщение для подбора модели и размера.</p>
     </header>
-
     <section class="catalog-workspace" aria-labelledby="filters-title">
-      <form class="catalog-filters" id="catalog-filters">
-        <div class="catalog-filters__top">
-          <div>
-            <p class="eyebrow">Шаг 1</p>
-            <h2 id="filters-title">Параметры</h2>
-          </div>
-          <button type="reset" class="catalog-reset">Сбросить</button>
-        </div>
-
+      <form class="catalog-filters ym-disable-submit" id="catalog-filters">
+        <div class="catalog-filters__top"><div><p class="eyebrow">Шаг 1</p><h2 id="filters-title">Твои пожелания</h2></div><button type="reset" class="catalog-reset">Сбросить</button></div>
         <div class="catalog-filter-grid">
-          <label>
-            <span>Бренд</span>
-            <select name="brand">
-              <option value="">Все бренды</option>
-              <option value="pleaser">Pleaser</option>
-              <option value="hella">Hella Heels</option>
-              <option value="demonia">Demonia</option>
-            </select>
-          </label>
-          <label>
-            <span>Тип обуви</span>
-            <select name="type">
-              <option value="">Не важно</option>
-              <option value="sandals">Босоножки</option>
-              <option value="ankle-boots">Ботильоны</option>
-              <option value="boots">Сапоги</option>
-              <option value="thigh-high">Ботфорты</option>
-              <option value="platforms">Lifestyle-платформы</option>
-            </select>
-          </label>
-          <label>
-            <span>Высота каблука</span>
-            <select name="height">
-              <option value="">Не важно</option>
-              <option value="4">4 дюйма</option>
-              <option value="5">5 дюймов</option>
-              <option value="6">6 дюймов</option>
-              <option value="7">7 дюймов</option>
-              <option value="8">8 дюймов</option>
-              <option value="9">9 дюймов</option>
-              <option value="10">10 дюймов</option>
-            </select>
-          </label>
-          <label>
-            <span>Размер US</span>
-            <select name="size">
-              <option value="">Не выбран</option>
-              {Array.from({ length: 13 }, (_, index) => index + 4).map((size) => <option value={size}>US {size}</option>)}
-            </select>
-          </label>
-          <label>
-            <span>Цвет</span>
-            <select name="color">
-              <option value="">Не важно</option>
-              <option value="black">Чёрный</option>
-              <option value="beige">Бежевый</option>
-              <option value="white">Белый</option>
-              <option value="red">Красный / бордовый</option>
-              <option value="pink">Розовый</option>
-              <option value="clear">Прозрачный</option>
-              <option value="other">Другой</option>
-            </select>
-          </label>
-          <label>
-            <span>Материал</span>
-            <select name="material">
-              <option value="">Не важно</option>
-              <option value="patent">Лак</option>
-              <option value="matte">Матовый</option>
-              <option value="pvc">Прозрачный PVC</option>
-              <option value="glitter">Глиттер / стразы</option>
-              <option value="faux-leather">Искусственная кожа</option>
-            </select>
-          </label>
-          <label>
-            <span>Посадка</span>
-            <select name="fit">
-              <option value="">Не важно</option>
-              <option value="standard">Стандартная</option>
-              <option value="wide">Wide Fit</option>
-            </select>
-          </label>
-          <label>
-            <span>Нос</span>
-            <select name="toe">
-              <option value="">Не важно</option>
-              <option value="open">Открытый</option>
-              <option value="closed">Закрытый</option>
-            </select>
-          </label>
+          {primary.map(key => <label><span>{fieldTitles[key]}</span><select name={key}><option value="">{key === "brand" ? "Все бренды" : key === "size" ? "Не выбран" : "Не важно"}</option>{Object.entries(options[key]).map(([value, label]) => <option value={value}>{label}</option>)}</select></label>)}
         </div>
-        <p class="catalog-filter-note">Размер и наличие всегда перепроверяются в официальном каталоге и с менеджером перед заказом.</p>
+        <p class="catalog-filter-note" id="height-help">Тройки ≈ 20 см, четвёрки ≈ 23 см, пятёрки ≈ 25 см — это высота каблука. Высота платформы зависит от модели.</p>
+        <a class="button catalog-show-results" href="#catalog-results">Перейти к результату ↓</a>
+        <details class="catalog-extra" id="additional-filters"><summary>Дополнительные параметры</summary><div class="catalog-filter-grid">
+          {secondary.map(key => <label><span>{fieldTitles[key]}</span><select name={key}><option value="">Не важно</option>{Object.entries(options[key]).map(([value, label]) => <option value={value}>{label}</option>)}</select></label>)}
+        </div><p class="catalog-filter-note">Если выбран «Другой» цвет, опиши его в комментарии ниже.</p></details>
+        <details class="catalog-extra" id="size-help"><summary>Не знаешь размер?</summary><p>Измерь обе стопы стоя на листе бумаги — от пятки до самого длинного пальца. Укажи больший результат в сантиметрах. Посадку сверим по конкретной модели.</p><div class="size-guide-links">{catalogBrands.map(brand => <a href={brand.sizeGuideUrl} target="_blank" rel="noreferrer">Таблица {brand.name} ↗</a>)}</div></details>
+        <div class="catalog-details ym-hide-content">
+          <p class="eyebrow">Можно заполнить сейчас</p>
+          <label><span>Длина стопы, см</span><input class="ym-disable-keys" name="foot" inputmode="decimal" placeholder="Например, 24,5" maxlength="20" autocomplete="off" /></label>
+          <label><span>Город доставки</span><input class="ym-disable-keys" name="city" placeholder="Например, Москва" maxlength="120" autocomplete="off" /></label>
+          <label><span>Уже нашла модель?</span><input class="ym-disable-keys" name="model" placeholder="Ссылка или артикул" maxlength="500" autocomplete="off" /></label>
+          <label><span>Комментарий</span><textarea class="ym-disable-keys" name="comment" rows="3" maxlength="1000" placeholder="Цвет, привычный размер, особенности стопы…"></textarea></label>
+        </div>
+        <p class="catalog-filter-note">Поля необязательные. Текст остаётся на этой странице, пока ты сама не отправишь его в Telegram. <a href="/privacy/">Подробнее</a></p>
+        <noscript><p>Для сборки запроса включи JavaScript. Официальные каталоги и таблицы размеров доступны по ссылкам.</p></noscript>
       </form>
-
-      <section class="catalog-results" aria-labelledby="results-title" aria-live="polite">
-        <div class="catalog-results__heading">
-          <div>
-            <p class="eyebrow">Шаг 2</p>
-            <h2 id="results-title">Куда перейти</h2>
-          </div>
-          <p id="result-count">3 каталога</p>
-        </div>
-
-        <div class="catalog-selection" id="catalog-selection">
-          <span>Параметры пока не выбраны</span>
-        </div>
-
-        <div class="catalog-results__list">
-          {brands.map((brand, index) => (
-            <article class="catalog-result" data-brand={brand.id}>
-              <span class="catalog-result__index">{String(index + 1).padStart(2, "0")}</span>
-              <div class="catalog-result__copy">
-                <p class="eyebrow">{brand.eyebrow}</p>
-                <h3>{brand.name}</h3>
-                <p>{brand.description}</p>
-                <p class="catalog-result__source">Официальный каталог бренда · цены и наличие у первоисточника</p>
-              </div>
-              <a class="catalog-result__link" href={brand.officialUrl} data-catalog-link target="_blank" rel="noreferrer">
-                Открыть каталог
-                <span aria-hidden="true">↗</span>
-              </a>
-            </article>
-          ))}
-        </div>
-
-        <aside class="catalog-request">
-          <div>
-            <p class="eyebrow">Шаг 3</p>
-            <h2>Запрос менеджеру</h2>
-            <p>Скопируй выбранные параметры и отправь их в Telegram — менеджер проверит конкретные модели, посадку и итоговые условия.</p>
-          </div>
-          <div class="catalog-request__message">
-            <pre id="catalog-request-text">Здравствуйте! Хочу подобрать обувь. Подскажите подходящие варианты.</pre>
-            <button type="button" class="copy-button" id="copy-catalog-request">
-              <span>Скопировать запрос</span>
-              <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 7V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2M5 8h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2Z" /></svg>
-            </button>
-            <a class="button" href="https://t.me/pleaserrussia" target="_blank" rel="noreferrer">Открыть Telegram</a>
-            <p class="catalog-copy-status" aria-live="polite"></p>
-          </div>
+      <section class="catalog-results" id="catalog-results" aria-labelledby="results-title">
+        <div class="catalog-results__heading"><div><p class="eyebrow">Шаг 2</p><h2 id="results-title">Каталоги брендов</h2></div><p id="result-count" aria-live="polite">3 каталога</p></div>
+        <p class="catalog-results__intro">Это переходы к брендам, а не список найденных товаров. Все пожелания попадут в запрос; для каждой ссылки ниже указано, что она учитывает.</p>
+        <div class="catalog-selection" id="catalog-selection"><span>Параметры пока не выбраны</span></div>
+        <div class="catalog-results__list">{catalogBrands.map((brand, index) => <article class="catalog-result" data-brand={brand.id}>
+          <span class="catalog-result__index">{String(index + 1).padStart(2, "0")}</span>
+          <div class="catalog-result__copy"><h3>{brand.name}</h3><p>{brand.description}</p><p class="catalog-result__source">Цены и наличие проверяются у бренда и перед заказом.</p><div class="catalog-route-note" data-route-note>Открывается общий каталог бренда.</div></div>
+          <a class="catalog-result__link" href={brand.officialUrl} data-catalog-link data-goal="catalog_open" target="_blank" rel="noreferrer">Открыть каталог <span aria-hidden="true">↗</span></a>
+        </article>)}</div>
+        <aside class="catalog-request" id="catalog-request" aria-labelledby="request-title">
+          <div><p class="eyebrow">Шаг 3</p><h2 id="request-title">Готовый запрос</h2><p>Скопируй сообщение, открой группу и вставь текст. Поможем проверить размер и модель, рассчитаем итоговую стоимость и срок доставки до подтверждения заказа.</p></div>
+          <div class="catalog-request__message"><pre class="ym-hide-content" id="catalog-request-text" tabindex="0">Здравствуйте! Хочу подобрать обувь. Подскажите подходящие варианты.</pre><button type="button" class="copy-button" id="copy-catalog-request" hidden><span>Скопировать запрос</span><span aria-hidden="true">⧉</span></button><a class="button" href="https://t.me/pleaserrussia" target="_blank" rel="noreferrer">Открыть Telegram ↗</a><p class="catalog-copy-status" aria-live="polite"></p></div>
         </aside>
       </section>
     </section>
-
-    <section class="catalog-explainer section" aria-labelledby="catalog-explainer-title">
-      <p class="eyebrow">Почему так</p>
-      <h2 id="catalog-explainer-title">Актуальные данные —<br /><em>у первоисточника</em></h2>
-      <div>
-        <p>Мы не копируем цены и остатки брендов: они могут измениться быстрее, чем обновится локальная витрина. Фильтры помогают сформулировать выбор, а ссылка ведёт в оригинальный каталог.</p>
-        <p>Если точной комбинации в каталоге нет, менеджер проверит близкие модели, другой цвет или возможность индивидуального и коллективного пошива.</p>
-      </div>
-    </section>
+    <section class="catalog-explainer section" aria-labelledby="catalog-explainer-title"><p class="eyebrow">Перед подтверждением</p><h2 id="catalog-explainer-title">Выбираем<br /><em>вместе</em></h2><div><p>Размер, доступность и посадку проверяем по конкретной паре. Если точной комбинации нет, обсудим близкие варианты или возможность пошива.</p><p>Heels Please — работаем с 2023 года. <a href="/#reviews">Почитай отзывы покупателей</a> и загляни в живой чат.</p></div></section>
   </main>
   <Footer />
-  <a class="mobile-cta" href="https://t.me/pleaserrussia" target="_blank" rel="noreferrer">Написать в Telegram</a>
-
+  <a class="mobile-cta" href="#catalog-request">К готовому запросу ↓</a>
   <script>
-    type BrandId = "pleaser" | "hella" | "demonia";
-    type FilterName = "brand" | "type" | "height" | "size" | "color" | "material" | "fit" | "toe";
-
-    const form = document.querySelector<HTMLFormElement>("#catalog-filters");
-    const resultCards = Array.from(document.querySelectorAll<HTMLElement>("[data-brand]"));
-    const selection = document.querySelector<HTMLElement>("#catalog-selection");
-    const resultCount = document.querySelector<HTMLElement>("#result-count");
-    const requestText = document.querySelector<HTMLElement>("#catalog-request-text");
-    const copyButton = document.querySelector<HTMLButtonElement>("#copy-catalog-request");
-    const copyStatus = document.querySelector<HTMLElement>(".catalog-copy-status");
-
-    const labels: Record<FilterName, Record<string, string>> = {
-      brand: { pleaser: "Pleaser", hella: "Hella Heels", demonia: "Demonia" },
-      type: { sandals: "босоножки", "ankle-boots": "ботильоны", boots: "сапоги", "thigh-high": "ботфорты", platforms: "lifestyle-платформы" },
-      height: Object.fromEntries([4, 5, 6, 7, 8, 9, 10].map((value) => [String(value), `${value} дюймов`])),
-      size: Object.fromEntries(Array.from({ length: 13 }, (_, index) => index + 4).map((value) => [String(value), `US ${value}`])),
-      color: { black: "чёрный", beige: "бежевый", white: "белый", red: "красный / бордовый", pink: "розовый", clear: "прозрачный", other: "другой" },
-      material: { patent: "лак", matte: "матовый", pvc: "прозрачный PVC", glitter: "глиттер / стразы", "faux-leather": "искусственная кожа" },
-      fit: { standard: "стандартная", wide: "Wide Fit" },
-      toe: { open: "открытый", closed: "закрытый" },
-    };
-
-    const fieldTitles: Record<FilterName, string> = {
-      brand: "Бренд",
-      type: "Тип",
-      height: "Высота",
-      size: "Размер",
-      color: "Цвет",
-      material: "Материал",
-      fit: "Посадка",
-      toe: "Нос",
-    };
-
-    const pleaserHeights = new Set(["4", "5", "6", "7", "8", "9", "10"]);
-    const hellaTypes: Record<string, string> = {
-      sandals: "sandals",
-      "ankle-boots": "boots",
-      boots: "boots",
-      "thigh-high": "thigh-high",
-      platforms: "all-heels",
-    };
-    const demoniaTypes: Record<string, string> = {
-      sandals: "shoes-sandals",
-      "ankle-boots": "boots",
-      boots: "boots",
-      "thigh-high": "boots",
-      platforms: "platforms",
-    };
-
-    function getState() {
-      const data = new FormData(form!);
-      return Object.fromEntries(data.entries()) as Record<FilterName, string>;
-    }
-
-    function officialUrl(brand: BrandId, state: Record<FilterName, string>) {
-      if (brand === "pleaser") {
-        if (state.height && pleaserHeights.has(state.height)) return `https://pleasershoes.com/collections/${state.height}-inch-collection`;
-        if (state.type === "thigh-high") return "https://pleasershoes.com/collections/pleaser/boots-thigh-high";
-        return "https://pleasershoes.com/collections/pleaser";
-      }
-
-      if (brand === "hella") {
-        const collection = hellaTypes[state.type] || "all-heels";
-        const url = new URL(`https://us.hellaheels.com/collections/${collection}`);
-        if (state.height && ["6", "7", "8", "9"].includes(state.height)) url.searchParams.set("filter.p.tag", `${state.height}inch`);
-        return url.toString();
-      }
-
-      const collection = demoniaTypes[state.type] || "all";
-      const url = new URL(`https://demoniacult.com/collections/${collection}`);
-      if (state.height && Number(state.height) <= 6) url.searchParams.set("constraint", `${state.height}-inch`);
-      return url.toString();
-    }
-
+    import { filterNames, fieldTitles, heightLabel, restoreFilters, catalogRoute, buildRequest, valueLabel, type FilterName, type BrandId } from "../data/catalog";
+    import { trackGoal } from "../scripts/analytics";
+    const form = document.querySelector<HTMLFormElement>("#catalog-filters")!;
+    const cards = Array.from(document.querySelectorAll<HTMLElement>("[data-brand]"));
+    const selection = document.querySelector<HTMLElement>("#catalog-selection")!;
+    const count = document.querySelector<HTMLElement>("#result-count")!;
+    const request = document.querySelector<HTMLElement>("#catalog-request-text")!;
+    const copy = document.querySelector<HTMLButtonElement>("#copy-catalog-request")!;
+    const status = document.querySelector<HTMLElement>(".catalog-copy-status")!;
+    let copyTimer: ReturnType<typeof setTimeout> | undefined;
     function update() {
-      if (!form) return;
-      const state = getState();
+      const data = new FormData(form);
+      const state = restoreFilters(new URLSearchParams(filterNames.map(key => [key, String(data.get(key) || "")])));
       const params = new URLSearchParams();
-      (Object.entries(state) as Array<[FilterName, string]>).forEach(([key, value]) => {
-        if (value) params.set(key, value);
-      });
-      history.replaceState({}, "", `${location.pathname}${params.size ? `?${params}` : ""}`);
-
-      const active = (Object.entries(state) as Array<[FilterName, string]>).filter(([, value]) => value);
-      if (selection) {
-        selection.innerHTML = active.length
-          ? active.map(([key, value]) => `<span>${fieldTitles[key]}: <strong>${labels[key][value]}</strong></span>`).join("")
-          : "<span>Параметры пока не выбраны</span>";
-      }
-
-      const visibleBrands = state.brand ? [state.brand] : ["pleaser", "hella", "demonia"];
-      resultCards.forEach((card) => {
+      for (const key of filterNames) if (state[key]) params.set(key, state[key]);
+      history.replaceState(null, "", `${location.pathname}${params.size ? `?${params}` : ""}${location.hash}`);
+      const height = form.elements.namedItem("height") as HTMLSelectElement;
+      for (const option of height.options) if (option.value) option.textContent = heightLabel(option.value, state.brand);
+      document.querySelector<HTMLElement>("#height-help")!.textContent = state.brand === "demonia" ? "У Demonia высоту каблука и платформы уточняем по конкретной модели; танцевальные категории здесь не применяем." : "Тройки ≈ 20 см, четвёрки ≈ 23 см, пятёрки ≈ 25 см — это высота каблука. Высота платформы зависит от модели.";
+      if (state.size === "help") document.querySelector<HTMLDetailsElement>("#size-help")!.open = true;
+      selection.replaceChildren();
+      const active = filterNames.filter(key => state[key]);
+      for (const key of active) { const chip = document.createElement("span"); chip.textContent = `${fieldTitles[key]}: ${valueLabel(key, state)}`; selection.append(chip); }
+      if (!active.length) selection.textContent = "Параметры пока не выбраны";
+      let visible = 0;
+      for (const card of cards) {
         const brand = card.dataset.brand as BrandId;
-        card.hidden = !visibleBrands.includes(brand);
-        const link = card.querySelector<HTMLAnchorElement>("[data-catalog-link]");
-        if (link) link.href = officialUrl(brand, state);
-      });
-      if (resultCount) resultCount.textContent = visibleBrands.length === 1 ? "1 каталог" : `${visibleBrands.length} каталога`;
-
-      const requestLines = ["Здравствуйте! Хочу подобрать обувь:"];
-      (Object.entries(state) as Array<[FilterName, string]>).forEach(([key, value]) => {
-        if (value) requestLines.push(`• ${fieldTitles[key]}: ${labels[key][value]}`);
-      });
-      requestLines.push("• Длина стопы в сантиметрах:", "• Город:", "Подскажите подходящие модели, актуальную стоимость и срок доставки.");
-      if (requestText) requestText.textContent = requestLines.join("\n");
-    }
-
-    function restoreFromUrl() {
-      if (!form) return;
-      const params = new URLSearchParams(location.search);
-      params.forEach((value, key) => {
-        const field = form.elements.namedItem(key);
-        if (field instanceof HTMLSelectElement && Array.from(field.options).some((option) => option.value === value)) field.value = value;
-      });
-      update();
-    }
-
-    form?.addEventListener("change", update);
-    form?.addEventListener("reset", () => window.setTimeout(update));
-    copyButton?.addEventListener("click", async () => {
-      const text = requestText?.textContent?.trim();
-      if (!text) return;
-      try {
-        await navigator.clipboard.writeText(text);
-        copyButton.querySelector("span")!.textContent = "Скопировано";
-        if (copyStatus) copyStatus.textContent = "Запрос скопирован — его можно отправить менеджеру.";
-        window.setTimeout(() => {
-          copyButton.querySelector("span")!.textContent = "Скопировать запрос";
-          if (copyStatus) copyStatus.textContent = "";
-        }, 2500);
-      } catch {
-        if (copyStatus) copyStatus.textContent = "Не удалось скопировать. Выделите текст вручную.";
+        card.hidden = Boolean(state.brand && state.brand !== brand);
+        if (!card.hidden) visible++;
+        const route = catalogRoute(brand, state);
+        card.querySelector<HTMLAnchorElement>("[data-catalog-link]")!.href = route.url;
+        const note = card.querySelector<HTMLElement>("[data-route-note]")!;
+        note.replaceChildren();
+        for (const [title, keys] of [["В каталоге учтено", route.applied], ["В запросе для подбора", route.pending]] as Array<[string, FilterName[]]>) {
+          if (keys.length) { const p = document.createElement("p"); p.textContent = `${title}: ${keys.map(key => `${fieldTitles[key].toLowerCase()} — ${key === "height" ? heightLabel(state.height, brand) : valueLabel(key, state)}`).join("; ")}.`; note.append(p); }
+        }
+        if (!route.applied.length) { const p = document.createElement("p"); p.textContent = "Открывается общий или ближайший раздел бренда. Точный вариант проверим вместе."; note.prepend(p); }
       }
+      count.textContent = visible === 1 ? "1 каталог" : `${visible} каталога`;
+      request.textContent = buildRequest(state, { foot: String(data.get("foot") || ""), city: String(data.get("city") || ""), model: String(data.get("model") || ""), comment: String(data.get("comment") || "") });
+      clearTimeout(copyTimer);
+      copy.querySelector("span")!.textContent = "Скопировать запрос";
+      status.textContent = "";
+    }
+    const restored = restoreFilters(new URLSearchParams(location.search));
+    for (const key of filterNames) (form.elements.namedItem(key) as HTMLSelectElement).value = restored[key];
+    if (["color", "material", "fit", "toe"].some(key => restored[key as FilterName])) document.querySelector<HTMLDetailsElement>("#additional-filters")!.open = true;
+    form.addEventListener("submit", event => event.preventDefault());
+    form.addEventListener("change", () => { update(); trackGoal("picker_change"); });
+    form.addEventListener("input", event => { if (!(event.target instanceof HTMLSelectElement)) update(); });
+    form.addEventListener("reset", () => setTimeout(() => { document.querySelector<HTMLDetailsElement>("#size-help")!.open = false; document.querySelector<HTMLDetailsElement>("#additional-filters")!.open = false; update(); }));
+    copy.hidden = false;
+    copy.addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(request.textContent || ""); copy.querySelector("span")!.textContent = "Скопировано"; status.textContent = "Теперь открой Telegram и вставь сообщение в группе."; trackGoal("request_copy"); copyTimer = setTimeout(() => { copy.querySelector("span")!.textContent = "Скопировать запрос"; status.textContent = ""; }, 3500); }
+      catch { const range = document.createRange(); range.selectNodeContents(request); const selected = window.getSelection(); selected?.removeAllRanges(); selected?.addRange(range); request.focus(); status.textContent = "Текст выделен. Скопируй его вручную и вставь в Telegram."; }
     });
-
-    restoreFromUrl();
+    update();
+    trackGoal("picker_open");
   </script>
 </BaseLayout>

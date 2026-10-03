@@ -29,6 +29,7 @@ const { brand } = Astro.props;
       {brand.highlights.map((item) => <li>{item}</li>)}
     </ul>
     <div class="brand-card__links">
+      <a class="button brand-picker" href={`/catalog/?brand=${brand.slug === "hella-heels" ? "hella" : brand.slug}`} data-goal="picker_entry">Подобрать {brand.name}</a>
       <a class="text-link" href={brand.officialUrl} target="_blank" rel="noreferrer">Открыть сайт бренда</a>
       <a class="muted-link" href={brand.sizeGuideUrl} target="_blank" rel="noreferrer">Таблица размеров</a>
     </div>
