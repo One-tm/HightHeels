@@ -173,7 +173,7 @@ const structuredData = {
         </li>
         <li>
           <span>02</span>
-          <div><h3>Измерь стопу</h3><p>Встань на лист бумаги, отметь крайние точки обеих стоп и измерь длину в сантиметрах. Для подбора сообщи больший результат.</p></div>
+          <div><h3>Измерь стопу</h3><p>Встань на лист бумаги, отметь крайние точки обеих стоп и измерь длину в сантиметрах. Для подбора сообщи больший результат. <a href="/sizes/">Сверь таблицу размеров и советы по посадке →</a></p></div>
         </li>
         <li>
           <span>03</span>
@@ -228,7 +228,7 @@ const structuredData = {
               <span class="faq__question">{item.question}</span>
               <span class="faq__toggle" aria-hidden="true">+</span>
             </summary>
-            <p>{item.answer}</p>
+            <p>{item.answer}{item.question === "Как подобрать размер стрипов по длине стопы?" && <> <a href="/sizes/">Открыть таблицу размеров и советы →</a></>}</p>
           </details>
         ))}
       </div>

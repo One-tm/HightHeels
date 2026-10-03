@@ -1,0 +1,61 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import SizeTable from "../components/SizeTable.astro";
+import { pleaserSizeRows, heelcatsSizeRows, sizeTips } from "../data/sizes";
+import { brands } from "../data/brands";
+import { community } from "../data/community";
+const title = "Таблица размеров Pleaser в сантиметрах | Heels Please";
+const description = "Размеры US 5–14 для Pleaser Adore, Flamingo, Xtreme, Infinity и Beyond. Как измерить стопу и выбрать размер с учётом материала и посадки.";
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/sizes/">
+  <Header compact />
+  <main id="content" class="sizes-page section">
+    <nav class="sizes-breadcrumbs" aria-label="Хлебные крошки"><a href="/">Главная</a><span aria-hidden="true">/</span><span aria-current="page">Размеры</span></nav>
+    <header class="sizes-heading">
+      <p class="eyebrow">Перед заказом</p>
+      <h1>Размеры<br /><em>и посадка</em></h1>
+      <p>Начни с длины стопы, затем найди линейку и тип обуви. Даже у одного бренда значения могут отличаться — сравнивай с конкретной моделью.</p>
+    </header>
+
+    <section class="sizes-measure" aria-labelledby="measure-title">
+      <h2 id="measure-title">Как измерить стопу</h2>
+      <ol><li>Встань на лист бумаги и отметь пятку и самый длинный палец.</li><li>Измерь расстояние между отметками в сантиметрах для обеих стоп.</li><li>Для подбора используй больший результат и учти ширину стопы.</li></ol>
+    </section>
+
+    <section class="sizes-chart" aria-labelledby="pleaser-sizes-title">
+      <h2 id="pleaser-sizes-title">Таблица размеров Pleaser</h2>
+      <p>Размеры указаны в американской системе US, значения — в сантиметрах. Выбери строку своей линейки; для Infinity босоножки вынесены отдельно.</p>
+      <p class="sizes-scroll-hint">На небольшом экране прокрути таблицу вправо, чтобы увидеть все размеры →</p>
+      <SizeTable caption="Pleaser" rows={pleaserSizeRows} />
+      <p class="sizes-table-note">«—» означает, что в исходной таблице нет значения. Наличие размера уточняем отдельно.</p>
+    </section>
+
+    <details class="sizes-other">
+      <summary>Хилкаты — обувь без каблука</summary>
+      <p>Отдельная строка из таблицы для обуви без каблука. Не применяй эти значения к линейкам Pleaser на каблуке.</p>
+      <SizeTable caption="Хилкаты · без каблука" rows={heelcatsSizeRows} />
+    </details>
+
+    <section class="sizes-advice" aria-labelledby="advice-title">
+      <h2 id="advice-title">Если размер между двумя</h2>
+      <p>Ориентиры для выбора из таблицы. Учитывай их вместе: тип обуви, материал и ширина стопы влияют на посадку.</p>
+      <div class="sizes-tips">{sizeTips.map(tip => <article><h3>{tip.title}</h3><p>{tip.text}</p></article>)}</div>
+    </section>
+
+    <aside class="sizes-help" aria-labelledby="sizes-help-title">
+      <h2 id="sizes-help-title">Поможем определиться</h2>
+      <p>Таблица — ориентир. Если рекомендации для твоей стопы и выбранного материала расходятся, пришли модель, длину обеих стоп и расскажи о посадке привычной обуви. Подтвердим размер до заказа.</p>
+      <div class="sizes-actions"><a class="button" href={community.url} target="_blank" rel="noreferrer">Уточнить размер в Telegram ↗</a><a class="text-link" href="/catalog/" data-goal="picker_entry">Перейти к подбору ↗</a></div>
+    </aside>
+
+    <section class="sizes-official" aria-labelledby="official-sizes-title">
+      <h2 id="official-sizes-title">Таблицы на сайтах брендов</h2>
+      <div class="sizes-actions">{brands.map(brand => <a class="text-link" href={brand.sizeGuideUrl} target="_blank" rel="noreferrer">{brand.name} ↗</a>)}</div>
+    </section>
+  </main>
+  <Footer />
+  <a class="mobile-cta" href={community.url} target="_blank" rel="noreferrer">Помогите выбрать размер ↗</a>
+</BaseLayout>

@@ -1,0 +1,22 @@
+---
+import { usSizes, formatLength } from "../data/sizes";
+
+interface Props {
+  caption: string;
+  rows: { line: string; type: string; lengths: (number | null)[] }[];
+}
+const { caption, rows } = Astro.props;
+---
+
+<div class="size-table-scroll" tabindex="0" role="region" aria-label={`${caption}. Таблица с горизонтальной прокруткой`}>
+  <table class="size-table">
+    <caption>{caption} · сантиметры</caption>
+    <thead><tr><th scope="col">Линейка / тип обуви</th>{usSizes.map(size => <th scope="col">US {size}</th>)}</tr></thead>
+    <tbody>
+      {rows.map(row => <tr>
+        <th scope="row"><strong>{row.line}</strong><span>{row.type}</span></th>
+        {row.lengths.map(length => <td>{length === null ? <span aria-label="Нет данных">—</span> : formatLength(length)}</td>)}
+      </tr>)}
+    </tbody>
+  </table>
+</div>
