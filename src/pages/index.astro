@@ -20,6 +20,8 @@ const keywords = [
   "подобрать размер стрипов",
 ];
 
+const marqueeBrands = ["Pleaser", "Hella Heels", "Demonia", "Pleaser", "Hella Heels", "Demonia"];
+
 const orderChecklist = `Здравствуйте! Хочу подобрать обувь:\n• Бренд:\n• Модель или ссылка:\n• Цвет:\n• Размер:\n• Длина стопы в сантиметрах:\n• Город:`;
 
 const faqItems = [
@@ -29,7 +31,7 @@ const faqItems = [
   },
   {
     question: "Какие модели и цвета сейчас можно заказать?",
-    answer: "Доступность меняется. Чтобы быстро получить подходящую подборку, укажите бренд, тип обуви — босоножки, ботильоны или сапоги, — желаемую высоту платформы, цвет и размер.",
+    answer: "Доступность меняется. Чтобы быстро получить подходящую подборку, укажите бренд, тип обуви — босоножки, ботильоны или сапоги, — желаемую высоту каблука, цвет и размер.",
   },
   {
     question: "Как подобрать размер стрипов по длине стопы?",
@@ -113,7 +115,7 @@ const structuredData = {
         <h1 id="hero-title">Стрипы и<br /><em>платформы</em><br />под заказ.</h1>
         <p class="hero__intro">Pleaser, Hella Heels и Demonia — помогаем подобрать модель и размер, рассчитать стоимость и оформить доставку по России и в Беларусь.</p>
         <div class="hero-actions"><a class="button" href="/catalog/" data-goal="picker_entry">Подобрать по параметрам <span aria-hidden="true">↗</span></a><a class="hero-telegram" href={community.url} target="_blank" rel="noreferrer">Написать в Telegram ↗</a></div>
-        <p class="hero__note">Heels Please — работаем с 2023 года</p>
+        <p class="hero__note">С 2023 года · {community.members} участников в Telegram · <a href="#reviews">Отзывы покупателей</a></p>
       </div>
       <div class="hero__visual">
         <div class="hero__frame">
@@ -130,11 +132,11 @@ const structuredData = {
         <span class="hero__vertical">POLE · STAGE · SELF EXPRESSION</span>
         <span class="hero__edition">Selected<br />with care</span>
       </div>
-      <a class="scroll-cue" href="#brands" aria-label="Перейти к брендам"><span></span>Смотреть</a>
+      <a class="scroll-cue" href="#selection" aria-label="Перейти к выбору высоты"><span></span>Выбрать пару</a>
     </section>
 
     <section class="marquee" aria-label="Представленные бренды">
-      <div>Pleaser <span>✦</span> Hella Heels <span>✦</span> Demonia <span>✦</span> Pleaser <span>✦</span> Hella Heels <span>✦</span> Demonia</div>
+      <div class="marquee__track">{[0, 1].map(copy => <div class="marquee__group" aria-hidden={copy === 1 ? "true" : undefined}>{marqueeBrands.map(name => <span class="marquee__item">{name}<span aria-hidden="true">✦</span></span>)}</div>)}</div>
     </section>
 
     <section class="picker-teaser section" id="selection" aria-labelledby="picker-title">
@@ -145,17 +147,6 @@ const structuredData = {
         <a href="/catalog/?height=10" data-goal="picker_entry"><strong>Пятёрки</strong><span>Каблук 10″ · ≈25 см</span><span aria-hidden="true">↗</span></a>
         <a href="/catalog/" data-goal="picker_entry"><strong>Помогите выбрать</strong><span>Определимся вместе</span><span aria-hidden="true">↗</span></a>
       </div>
-    </section>
-
-    <section class="community section" aria-labelledby="community-title">
-      <div><p class="eyebrow">Познакомься с нами</p><h2 id="community-title">За сайтом —<br /><em>живое сообщество</em></h2><p>Heels Please — работаем с 2023 года. В группе обсуждаем модели и размеры, отвечаем на вопросы, а покупательницы делятся полученными парами и впечатлениями.</p><a class="button" href={community.url} target="_blank" rel="noreferrer">Открыть живой чат ↗</a></div>
-      <div class="community__facts"><div><strong>С 2023</strong><span>помогаем выбирать и заказывать</span></div><div><strong>{community.members}</strong><span>участников Telegram-сообщества</span><small>Проверено <time datetime={community.checkedDate}>{community.checkedAt}</time></small></div><a href="#reviews">Реальные отзывы с ссылками на сообщения ↓</a><p>Оформляй заказ через официальную группу. Мы не пишем покупательницам в личные сообщения первыми.</p></div>
-    </section>
-
-    <section class="reviews section" id="reviews" aria-labelledby="reviews-title">
-      <div class="reviews__heading"><p class="eyebrow">Из нашего Telegram-чата</p><h2 id="reviews-title">Пары приехали.<br /><em>Впечатления остались.</em></h2><p>Отзывы о полученных заказах. У каждого — ссылка на исходное сообщение в группе.</p></div>
-      <div class="reviews__grid">{reviews.map(review => <figure class="review-card"><blockquote>{review.text}</blockquote><figcaption><strong>{review.author}</strong><time datetime={review.datetime}>{review.date}</time></figcaption><a href={review.url} target="_blank" rel="noreferrer">Посмотреть в Telegram ↗</a></figure>)}</div>
-      <a class="text-link" href={community.url} target="_blank" rel="noreferrer">Больше отзывов и обсуждений в группе ↗</a>
     </section>
 
     <section class="brands section" id="brands" aria-labelledby="brands-title">
@@ -195,23 +186,6 @@ const structuredData = {
       </aside>
     </section>
 
-    <section class="brief section" aria-labelledby="brief-title">
-      <div class="brief__copy">
-        <p class="eyebrow">Готова к выбору?</p>
-        <h2 id="brief-title">Скопируй короткий<br /><em>чек-лист</em></h2>
-        <p>Заполни его и отправь в группу — так менеджер быстрее поймёт, какую пару ты ищешь.</p>
-      </div>
-      <div class="brief__card">
-        <div class="brief__card-top"><span>Сообщение менеджеру</span><span>6 пунктов</span></div>
-        <pre id="order-checklist">{orderChecklist}</pre>
-        <button class="copy-button" type="button" data-copy-target="order-checklist">
-          <span>Скопировать чек-лист</span>
-          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 7V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2M5 8h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2Z"/></svg>
-        </button>
-        <p class="copy-status" aria-live="polite"></p>
-      </div>
-    </section>
-
     <section class="order section" id="order" aria-labelledby="order-title">
       <div class="order__heading">
         <p class="eyebrow">Без сложных форм</p>
@@ -223,6 +197,18 @@ const structuredData = {
         <li><span>3</span><h3>Подтверждаешь</h3><p>Получаешь итоговую стоимость, срок доставки и условия. После этого согласовываешь заказ.</p></li>
         <li><span>4</span><h3>Остаёшься на связи</h3><p>Информация по заказу и дальнейшие вопросы остаются в Telegram.</p></li>
       </ol>
+      <div class="order__actions"><a class="button" href="/catalog/" data-goal="picker_entry">Подобрать и подготовить запрос ↗</a><a class="text-link" href={community.url} target="_blank" rel="noreferrer">Уже есть модель? Написать в группу ↗</a></div>
+      <details class="order-checklist"><summary>Есть модель? Открой короткий чек-лист для заказа</summary><p>Скопируй, заполни и отправь в группу.</p>
+      <div class="brief__card">
+        <div class="brief__card-top"><span>Сообщение менеджеру</span><span>6 пунктов</span></div>
+        <pre id="order-checklist">{orderChecklist}</pre>
+        <button class="copy-button" type="button" data-copy-target="order-checklist">
+          <span>Скопировать чек-лист</span>
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 7V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2M5 8h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2Z"/></svg>
+        </button>
+        <p class="copy-status" aria-live="polite"></p>
+      </div>
+      </details>
     </section>
 
     <section class="faq section" id="faq" aria-labelledby="faq-title">
@@ -246,6 +232,17 @@ const structuredData = {
           </details>
         ))}
       </div>
+    </section>
+
+    <section class="community section" aria-labelledby="community-title">
+      <div><p class="eyebrow">Познакомься с нами</p><h2 id="community-title">За сайтом —<br /><em>живое сообщество</em></h2><p>Heels Please — работаем с 2023 года. В группе обсуждаем модели и размеры, отвечаем на вопросы, а покупательницы делятся полученными парами и впечатлениями.</p><a class="button" href={community.url} target="_blank" rel="noreferrer">Открыть живой чат ↗</a></div>
+      <div class="community__facts"><div><strong>С 2023</strong><span>помогаем выбирать и заказывать</span></div><div><strong>{community.members}</strong><span>участников Telegram-сообщества</span><small>Проверено <time datetime={community.checkedDate}>{community.checkedAt}</time></small></div><a href="#reviews">Реальные отзывы с ссылками на сообщения ↓</a><p>Оформляй заказ через официальную группу. Мы не пишем покупательницам в личные сообщения первыми.</p></div>
+    </section>
+
+    <section class="reviews section" id="reviews" aria-labelledby="reviews-title">
+      <div class="reviews__heading"><p class="eyebrow">Из нашего Telegram-чата</p><h2 id="reviews-title">Пары приехали.<br /><em>Впечатления остались.</em></h2><p>Отзывы о полученных заказах. У каждого — ссылка на исходное сообщение в группе.</p></div>
+      <div class="reviews__grid">{reviews.map(review => <figure class="review-card"><blockquote>{review.text}</blockquote><figcaption><strong>{review.author}</strong><time datetime={review.datetime}>{review.date}</time></figcaption><a href={review.url} target="_blank" rel="noreferrer">Посмотреть в Telegram ↗</a></figure>)}</div>
+      <a class="text-link" href={community.url} target="_blank" rel="noreferrer">Больше отзывов и обсуждений в группе ↗</a>
     </section>
 
     <section class="final-cta" aria-labelledby="final-title">
