@@ -6,6 +6,7 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import BrandCard from "../components/BrandCard.astro";
 import TelegramCta from "../components/TelegramCta.astro";
+import GiftCertificates from "../components/GiftCertificates.astro";
 import { brands } from "../data/brands";
 import { reviews, community } from "../data/community";
 
@@ -60,6 +61,10 @@ const faqItems = [
   {
     question: "Можно ли заказать с доставкой в Беларусь?",
     answer: "Да, доставка в Беларусь возможна. Её актуальную стоимость и срок менеджер рассчитает по городу, модели и параметрам отправления.",
+  },
+  {
+    question: "Можно ли подарить сертификат?",
+    answer: "Да. Можно выбрать любую сумму, добавить персональный текст и выбрать дизайн из нескольких вариантов. Для оформления напишите в Telegram-группу Heels Please, укажите сумму и пожелание — покажем варианты и согласуем детали.",
   },
   {
     question: "Как безопасно оформить заказ?",
@@ -210,6 +215,8 @@ const structuredData = {
       </div>
       </details>
     </section>
+
+    <GiftCertificates />
 
     <section class="faq section" id="faq" aria-labelledby="faq-title">
       <div class="faq__heading">

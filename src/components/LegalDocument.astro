@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "./Header.astro";
+import Footer from "./Footer.astro";
+import type { LegalDocumentData } from "../data/legal";
+interface Props { document: LegalDocumentData; canonicalPath: string; }
+const { document, canonicalPath } = Astro.props;
+---
+<BaseLayout title={`${document.title} | Heels Please`} description={document.description} canonicalPath={canonicalPath} robots="noindex, follow">
+  <Header compact />
+  <main id="content" class="legal-page legal-document">
+    <p class="eyebrow">Heels Please · Документы</p>
+    <h1>{document.title}</h1>
+    <details class="legal-document__toc">
+      <summary>Содержание документа</summary>
+      <nav aria-label="Содержание документа">
+        <ol>{document.sections.map(section => <li><a href={`#${section.id}`}>{section.title}</a></li>)}</ol>
+      </nav>
+    </details>
+    <div class="legal-document__text">
+      {document.intro.map(text => <p>{text}</p>)}
+      {document.sections.map(section => <section id={section.id} aria-labelledby={`${section.id}-title`}>
+        <h2 id={`${section.id}-title`}>{section.title}</h2>
+        {section.blocks.map(block => block.kind === "list" ? <ul>{block.items.map(text => <li>{text}</li>)}</ul> : <p>{block.text}</p>)}
+      </section>)}
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>

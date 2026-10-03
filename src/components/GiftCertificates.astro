@@ -1,0 +1,26 @@
+---
+import { Image } from "astro:assets";
+import certificateImage from "../assets/gift-certificate.png";
+import { community } from "../data/community";
+---
+<section class="gift-certificates section" id="gift-certificates" aria-labelledby="gift-title">
+  <div class="gift-certificates__copy">
+    <p class="eyebrow">Подарок с личным смыслом</p>
+    <h2 id="gift-title">Подарочные<br /><em>сертификаты</em></h2>
+    <p>Подари возможность выбрать свою пару. Сертификат подойдёт для подруги или любимого тренера — к 8 Марта, дню рождения или отчётному концерту.</p>
+    <ul>
+      <li><strong>Любая сумма</strong> — номинал выбираешь ты.</li>
+      <li><strong>Личное пожелание</strong> — добавим твой текст по желанию.</li>
+      <li><strong>Несколько дизайнов</strong> — варианты покажем в чате.</li>
+    </ul>
+    <a class="button" href={community.url} target="_blank" rel="noreferrer">Оформить сертификат в Telegram ↗</a>
+    <p class="gift-certificates__hint">Напиши в группе, что нужен сертификат, укажи сумму и пожелание. Покажем дизайны и согласуем оформление.</p>
+    <p class="gift-certificates__share">Спрашивают, что тебе подарить? <a href={community.url} target="_blank" rel="noreferrer">Отправь ссылку на наш чат ↗</a></p>
+  </div>
+  <figure class="gift-certificates__preview">
+    <a href={certificateImage.src} target="_blank" rel="noreferrer" aria-label="Открыть образец подарочного сертификата в полном размере">
+      <Image src={certificateImage} alt="Образец подарочного сертификата Heels Please на 10 000 рублей с персональным текстом" widths={[800, 1536]} sizes="(max-width: 980px) 100vw, 50vw" format="webp" loading="lazy" />
+    </a>
+    <figcaption>Образец оформления. Сумму, пожелание и дизайн выбираешь при заказе. Нажми на изображение, чтобы рассмотреть его.</figcaption>
+  </figure>
+</section>
